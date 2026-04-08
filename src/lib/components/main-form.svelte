@@ -17,6 +17,12 @@
       });
     }
   });
+
+  function arrayWithoutElementAtIndex<T>(arr: T[], index: number) {
+    return arr.filter(function (value, arrIndex) {
+      return index !== arrIndex;
+    });
+  }
 </script>
 
 <form {...formInfo} oninput={() => formInfo.validate()}>
@@ -60,7 +66,21 @@
     <div class="multitextItems">
       {#each formInfo.fields.commanders.value() as commander, index}
         <label class="checkboxInput">
-          <input {...formInfo.fields.commanders[index].as("text")} />
+          <div>
+            <input {...formInfo.fields.commanders[index].as("text")} />
+            <button
+              onclick={() =>
+                formInfo.fields.commanders.set(
+                  arrayWithoutElementAtIndex(
+                    formInfo.fields.commanders.value().slice(),
+                    index,
+                  ),
+                )}>delete</button
+            >
+          </div>
+          {#each formInfo.fields.commanders[index].issues() as issue}
+            <span class="issue">{issue.message}</span>
+          {/each}
         </label>
       {/each}
       <button
@@ -107,6 +127,12 @@
     gap: 16px;
   }
 
+  .selectInput {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
   .textInput {
     display: flex;
     flex-direction: column;
@@ -126,6 +152,12 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
+  }
+
+  .multitextInput .multitextItems {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 
   button {

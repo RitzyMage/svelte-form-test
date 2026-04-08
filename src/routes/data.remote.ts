@@ -9,7 +9,7 @@ const updateUserSchema = v.pipe(v.object({
         username: v.pipe(v.string(), v.nonEmpty()),
 		title: v.picklist(TITLES),
 		games: v.array(v.picklist(GAMES)),
-        commanders: v.optional(v.array(v.string())),
+        commanders: v.optional(v.array(v.pipe(v.string(), v.nonEmpty()))),
         favoriteGuild: v.optional(v.picklist(GUILDS)),
         socialSecurity: v.string(),
 	}), v.check(_ => { 
