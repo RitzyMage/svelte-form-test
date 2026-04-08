@@ -1,6 +1,6 @@
 <script>
   import MainPage from "$lib/components/main-page.svelte";
-  import { updateUser } from "./data.remote";
+  import { updateUser, getUser } from "./data.remote";
 </script>
 
-<MainPage formInfo={updateUser} />
+<MainPage formInfo={updateUser} {getUser} />

@@ -1,8 +1,9 @@
 <script lang="ts">
   import { GAMES, GUILDS, TITLES } from "$lib/data";
+  import type { User } from "$lib/server/db/types";
   import type { UserFormAction } from "../../routes/data.remote";
 
-  let { formInfo }: { formInfo: UserFormAction } = $props();
+  let { formInfo }: { formInfo: UserFormAction; user: User } = $props();
 </script>
 
 <form {...formInfo}>

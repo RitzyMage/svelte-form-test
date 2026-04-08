@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { form } from '$app/server';
+import { form, query } from '$app/server';
 import { GAMES, GUILDS, TITLES } from '$lib/data';
 import type { RemoteForm } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
@@ -21,6 +21,11 @@ const updateUserSchema = v.pipe(v.object({
 
 type InputType = v.InferInput<typeof updateUserSchema>
 export type UserFormAction = RemoteForm<InputType, void>;
+
+export const getUser = query(async() => {
+    let existingUser = await db.select().from(userData).limit(1);
+    return existingUser[0];
+})
 
 export const updateUser: UserFormAction = form(
 	updateUserSchema,
