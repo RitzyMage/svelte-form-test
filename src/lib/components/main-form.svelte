@@ -23,14 +23,13 @@
   <label class="selectInput">
     <span class="label">Title</span>
     <select {...formInfo.fields.title.as("select")}>
-      <option>-</option>
       {#each TITLES as title}
         <option>{title}</option>
       {/each}
-      {#each formInfo.fields.title.issues() as issue}
-        <span class="issue">{issue.message}</span>
-      {/each}
     </select>
+    {#each formInfo.fields.title.issues() as issue}
+      <span class="issue">{issue.message}</span>
+    {/each}
   </label>
 
   <label class="textInput">
@@ -72,10 +71,10 @@
           ]);
         }}>Add</button
       >
-      {#each formInfo.fields.commanders.issues() as issue}
-        <span class="issue">{issue.message}</span>
-      {/each}
     </div>
+    {#each formInfo.fields.commanders.issues() as issue}
+      <span class="issue">{issue.message}</span>
+    {/each}
   </div>
 
   <label class="selectInput">
@@ -84,10 +83,10 @@
       {#each GUILDS as title}
         <option>{title}</option>
       {/each}
-      {#each formInfo.fields.favoriteGuild.issues() as issue}
-        <span class="issue">{issue.message}</span>
-      {/each}
     </select>
+    {#each formInfo.fields.favoriteGuild.issues() as issue}
+      <span class="issue">{issue.message}</span>
+    {/each}
   </label>
 
   <label class="textInput">
