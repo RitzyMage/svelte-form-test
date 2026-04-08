@@ -1,14 +1,18 @@
 <script lang="ts">
-  import { GAMES } from "$lib/data";
+  import { GAMES, GUILDS, TITLES } from "$lib/data";
   import type { UserFormAction } from "../../routes/data.remote";
 
   let { formInfo }: { formInfo: UserFormAction } = $props();
 </script>
 
 <form {...formInfo}>
-  <label class="textInput">
+  <label class="selectInput">
     <span class="label">Title</span>
-    <input {...formInfo.fields.title.as("text")} />
+    <select {...formInfo.fields.title.as("select")}>
+      {#each TITLES as title}
+        <option>{title}</option>
+      {/each}
+    </select>
   </label>
 
   <label class="textInput">
@@ -27,6 +31,39 @@
       {/each}
     </div>
   </div>
+
+  <div class="multitextInput">
+    <div class="label">Commanders</div>
+    <div class="multitextItems">
+      {#each formInfo.fields.commanders.value() as commander, index}
+        <label class="checkboxInput">
+          <input {...formInfo.fields.commanders[index].as("text")} />
+        </label>
+      {/each}
+      <button
+        onclick={() => {
+          formInfo.fields.commanders.set([
+            ...(formInfo.fields.commanders.value() ?? []),
+            "",
+          ]);
+        }}>Add</button
+      >
+    </div>
+  </div>
+
+  <label class="selectInput">
+    <span class="label">Favorite Guild</span>
+    <select {...formInfo.fields.favoriteGuild.as("select")}>
+      {#each GUILDS as title}
+        <option>{title}</option>
+      {/each}
+    </select>
+  </label>
+
+  <label class="textInput">
+    <span class="label">Social Security</span>
+    <input {...formInfo.fields.socialSecurity.as("text")} />
+  </label>
 
   <button type="submit">SAVE</button>
 </form>
