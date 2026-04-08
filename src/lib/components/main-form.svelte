@@ -19,12 +19,16 @@
   });
 </script>
 
-<form {...formInfo}>
+<form {...formInfo} oninput={() => formInfo.validate()}>
   <label class="selectInput">
     <span class="label">Title</span>
     <select {...formInfo.fields.title.as("select")}>
+      <option>-</option>
       {#each TITLES as title}
         <option>{title}</option>
+      {/each}
+      {#each formInfo.fields.title.issues() as issue}
+        <span class="issue">{issue.message}</span>
       {/each}
     </select>
   </label>
@@ -32,6 +36,9 @@
   <label class="textInput">
     <span class="label">Username</span>
     <input {...formInfo.fields.username.as("text")} />
+    {#each formInfo.fields.username.issues() as issue}
+      <span class="issue">{issue.message}</span>
+    {/each}
   </label>
 
   <div class="multicheckboxInput">
@@ -42,6 +49,9 @@
           <input {...formInfo.fields.games.as("checkbox", game)} />
           <span>{game}</span>
         </label>
+      {/each}
+      {#each formInfo.fields.games.issues() as issue}
+        <span class="issue">{issue.message}</span>
       {/each}
     </div>
   </div>
@@ -62,6 +72,9 @@
           ]);
         }}>Add</button
       >
+      {#each formInfo.fields.commanders.issues() as issue}
+        <span class="issue">{issue.message}</span>
+      {/each}
     </div>
   </div>
 
@@ -71,12 +84,18 @@
       {#each GUILDS as title}
         <option>{title}</option>
       {/each}
+      {#each formInfo.fields.favoriteGuild.issues() as issue}
+        <span class="issue">{issue.message}</span>
+      {/each}
     </select>
   </label>
 
   <label class="textInput">
     <span class="label">Social Security</span>
     <input {...formInfo.fields.socialSecurity.as("text")} />
+    {#each formInfo.fields.socialSecurity.issues() as issue}
+      <span class="issue">{issue.message}</span>
+    {/each}
   </label>
 
   <button type="submit">SAVE</button>
@@ -124,5 +143,9 @@
 
   .label {
     font-weight: bold;
+  }
+
+  .issue {
+    color: #922;
   }
 </style>
