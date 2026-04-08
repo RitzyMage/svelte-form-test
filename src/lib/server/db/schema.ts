@@ -1,12 +1,5 @@
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-
-export const TITLES = ["Lord", "Lady"] as const;
-
-export const GAMES = ['Dominion', 'Magic: The Gathering', 'Slay The Spire', 'Astrea: Six-Sided Oracles', 'Balatro', 'Cobalt Core'] as const;
-type GAME = typeof GAMES[number];
-
-export const GUILDS = ['Azorius', 'Selesnya', 'Boros', 'Orzhov', 'Simic', 'Gruul', 'Golgari', 'Dimir', 'Izzet', 'Rakdos'] as const;
-type GUILD = typeof GUILDS[number];
+import { TITLES, type GAME, GUILDS } from '../../data';
 
 export const userData = sqliteTable('users', {
 	id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
