@@ -2,6 +2,7 @@
   import { GAMES, GUILDS, TITLES } from "$lib/data";
   import type { User } from "$lib/server/db/types";
   import type { UserFormAction } from "../../routes/data.remote";
+  import IMask from "imask";
 
   let { formInfo, user }: { formInfo: UserFormAction; user: User } = $props();
 
@@ -23,6 +24,22 @@
       return index !== arrIndex;
     });
   }
+
+  let ssnInput: HTMLElement;
+  $effect(() => {
+    IMask(ssnInput, {
+      mask: "XXX-XX-0000",
+      definitions: {
+        X: {
+          mask: "0",
+          displayChar: ".",
+          placeholderChar: " ",
+        },
+      },
+      lazy: false,
+      overwrite: "shift",
+    });
+  });
 </script>
 
 <form {...formInfo} oninput={() => formInfo.validate()}>
@@ -111,7 +128,10 @@
 
   <label class="textInput">
     <span class="label">Social Security</span>
-    <input {...formInfo.fields.socialSecurity.as("text")} />
+    <input
+      {...formInfo.fields.socialSecurity.as("text")}
+      bind:this={ssnInput}
+    />
     {#each formInfo.fields.socialSecurity.issues() as issue}
       <span class="issue">{issue.message}</span>
     {/each}
