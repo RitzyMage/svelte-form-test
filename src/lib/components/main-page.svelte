@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { userForm } from "../../routes/data.remote";
+  import type { UserFormAction } from "../../routes/data.remote";
   import MainForm from "./main-form.svelte";
 
-  let props = $props<{ formInfo: userForm }>();
+  let props: { formInfo: UserFormAction } = $props();
 </script>
 
 <div>

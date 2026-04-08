@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { userForm } from "../../routes/data.remote";
+  import type { UserFormAction } from "../../routes/data.remote";
 
-  let { formInfo } = $props<{ formInfo: userForm }>();
+  let { formInfo }: { formInfo: UserFormAction } = $props();
 </script>
 
 <form {...formInfo}>

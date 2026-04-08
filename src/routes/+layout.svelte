@@ -16,14 +16,7 @@
 
 <style>
   main {
-    background-image: linear-gradient(
-      to left,
-      #bbb,
-      #bbb 10%,
-      #ccc 40%,
-      #ccc 60%,
-      #bbb 90%
-    );
+    background-color: #ddd;
     margin: 0;
     min-height: 100dvh;
     width: 100%;
