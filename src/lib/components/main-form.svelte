@@ -5,7 +5,18 @@
 
   let { formInfo, user }: { formInfo: UserFormAction; user: User } = $props();
 
-  formInfo.fields.set(user);
+  $effect(() => {
+    if (user) {
+      formInfo.fields.set({
+        commanders: user.commanders ?? [],
+        favoriteGuild: user.favoriteGuild || "Rakdos",
+        games: user.games || [],
+        socialSecurity: user.socialSecurity || "",
+        title: user.title || "Lord",
+        username: user.username,
+      });
+    }
+  });
 </script>
 
 <form {...formInfo}>
