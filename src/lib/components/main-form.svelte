@@ -3,7 +3,9 @@
   import type { User } from "$lib/server/db/types";
   import type { UserFormAction } from "../../routes/data.remote";
 
-  let { formInfo }: { formInfo: UserFormAction; user: User } = $props();
+  let { formInfo, user }: { formInfo: UserFormAction; user: User } = $props();
+
+  formInfo.fields.set(user);
 </script>
 
 <form {...formInfo}>
