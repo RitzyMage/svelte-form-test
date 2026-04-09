@@ -269,7 +269,16 @@
     background-color: #ddd;
   }
 
+  .tab-contents {
+    position: relative;
+  }
+
   .tab-contents[data-shown="false"] {
-    display: none;
+    transform: translate(100vw);
+    position: absolute;
+  }
+
+  .tab-contents {
+    transition: all 0.3s ease-out;
   }
 </style>
