@@ -48,113 +48,146 @@
   const playsMagic = $derived(
     formInfo.fields.games.value()?.includes("Magic: The Gathering"),
   );
+
+  let tab: "User" | "Games" | "Magic" = $state("User");
 </script>
 
-<form {...formInfo} oninput={() => formInfo.validate()}>
-  <label class="selectInput">
-    <span class="label">Title</span>
-    <select {...formInfo.fields.title.as("select")}>
-      {#each TITLES as title}
-        <option>{title}</option>
-      {/each}
-    </select>
-    {#each formInfo.fields.title.issues() as issue}
-      <span class="issue">{issue.message}</span>
-    {/each}
-  </label>
-
-  <label class="textInput">
-    <span class="label">Username</span>
-    <input {...formInfo.fields.username.as("text")} />
-    {#each formInfo.fields.username.issues() as issue}
-      <span class="issue">{issue.message}</span>
-    {/each}
-  </label>
-
-  <div class="multicheckboxInput">
-    <div class="label">Games</div>
-    <div class="checkboxes">
-      {#each GAMES as game}
-        <label class="checkboxInput">
-          <input {...formInfo.fields.games.as("checkbox", game)} />
-          <span>{game}</span>
-        </label>
-      {/each}
-      {#each formInfo.fields.games.issues() as issue}
-        <span class="issue">{issue.message}</span>
-      {/each}
-    </div>
+<div class="formContainer">
+  <div class="tabs">
+    <button
+      class="tab"
+      data-active={tab === "User"}
+      onclick={() => (tab = "User")}
+    >
+      User
+    </button>
+    <button
+      class="tab"
+      data-active={tab === "Games"}
+      onclick={() => (tab = "Games")}
+    >
+      Games
+    </button>
+    {#if playsMagic}<button
+        class="tab"
+        data-active={tab === "Magic"}
+        onclick={() => (tab = "Magic")}
+      >
+        Magic
+      </button>{/if}
   </div>
 
-  {#if playsMagic}
-    <div class="multitextInput">
-      <div class="label">Commanders</div>
-      <div class="multitextItems">
-        {#each formInfo.fields.commanders.value() as commander, index}
-          <label class="checkboxInput">
-            <div>
-              <input {...formInfo.fields.commanders[index].as("text")} />
-              <button
-                onclick={() =>
-                  formInfo.fields.commanders.set(
-                    arrayWithoutElementAtIndex(
-                      formInfo.fields.commanders.value().slice(),
-                      index,
-                    ),
-                  )}>delete</button
-              >
-            </div>
-            {#each formInfo.fields.commanders[index].issues() as issue}
-              <span class="issue">{issue.message}</span>
-            {/each}
-          </label>
+  <form {...formInfo} oninput={() => formInfo.validate()}>
+    {#if tab === "User"}
+      <label class="selectInput">
+        <span class="label">Title</span>
+        <select {...formInfo.fields.title.as("select")}>
+          {#each TITLES as title}
+            <option>{title}</option>
+          {/each}
+        </select>
+        {#each formInfo.fields.title.issues() as issue}
+          <span class="issue">{issue.message}</span>
         {/each}
-        <button
-          onclick={() => {
-            formInfo.fields.commanders.set([
-              ...(formInfo.fields.commanders.value() ?? []),
-              "",
-            ]);
-          }}>Add</button
-        >
+      </label>
+
+      <label class="textInput">
+        <span class="label">Username</span>
+        <input {...formInfo.fields.username.as("text")} />
+        {#each formInfo.fields.username.issues() as issue}
+          <span class="issue">{issue.message}</span>
+        {/each}
+      </label>
+
+      <label class="textInput">
+        <span class="label">Social Security</span>
+        <input
+          {...formInfo.fields.socialSecurity.as("text")}
+          bind:this={ssnInput}
+        />
+        {#each formInfo.fields.socialSecurity.issues() as issue}
+          <span class="issue">{issue.message}</span>
+        {/each}
+      </label>
+    {/if}
+
+    {#if tab === "Games"}
+      <div class="multicheckboxInput">
+        <div class="label">Games</div>
+        <div class="checkboxes">
+          {#each GAMES as game}
+            <label class="checkboxInput">
+              <input {...formInfo.fields.games.as("checkbox", game)} />
+              <span>{game}</span>
+            </label>
+          {/each}
+          {#each formInfo.fields.games.issues() as issue}
+            <span class="issue">{issue.message}</span>
+          {/each}
+        </div>
       </div>
-      {#each formInfo.fields.commanders.issues() as issue}
-        <span class="issue">{issue.message}</span>
-      {/each}
-    </div>
+    {/if}
 
-    <label class="selectInput">
-      <span class="label">Favorite Guild</span>
-      <select {...formInfo.fields.favoriteGuild.as("select")}>
-        {#each GUILDS as title}
-          <option>{title}</option>
+    {#if playsMagic && tab === "Magic"}
+      <div class="multitextInput">
+        <div class="label">Commanders</div>
+        <div class="multitextItems">
+          {#each formInfo.fields.commanders.value() as commander, index}
+            <label class="checkboxInput">
+              <div>
+                <input {...formInfo.fields.commanders[index].as("text")} />
+                <button
+                  onclick={() =>
+                    formInfo.fields.commanders.set(
+                      arrayWithoutElementAtIndex(
+                        formInfo.fields.commanders.value().slice(),
+                        index,
+                      ),
+                    )}>delete</button
+                >
+              </div>
+              {#each formInfo.fields.commanders[index].issues() as issue}
+                <span class="issue">{issue.message}</span>
+              {/each}
+            </label>
+          {/each}
+          <button
+            onclick={() => {
+              formInfo.fields.commanders.set([
+                ...(formInfo.fields.commanders.value() ?? []),
+                "",
+              ]);
+            }}>Add</button
+          >
+        </div>
+        {#each formInfo.fields.commanders.issues() as issue}
+          <span class="issue">{issue.message}</span>
         {/each}
-      </select>
-      {#each formInfo.fields.favoriteGuild.issues() as issue}
-        <span class="issue">{issue.message}</span>
-      {/each}
-    </label>
-  {/if}
+      </div>
 
-  <label class="textInput">
-    <span class="label">Social Security</span>
-    <input
-      {...formInfo.fields.socialSecurity.as("text")}
-      bind:this={ssnInput}
-    />
-    {#each formInfo.fields.socialSecurity.issues() as issue}
-      <span class="issue">{issue.message}</span>
-    {/each}
-  </label>
+      <label class="selectInput">
+        <span class="label">Favorite Guild</span>
+        <select {...formInfo.fields.favoriteGuild.as("select")}>
+          {#each GUILDS as title}
+            <option>{title}</option>
+          {/each}
+        </select>
+        {#each formInfo.fields.favoriteGuild.issues() as issue}
+          <span class="issue">{issue.message}</span>
+        {/each}
+      </label>
+    {/if}
 
-  <button type="submit">SAVE</button>
-</form>
+    <button type="submit">SAVE</button>
+  </form>
+</div>
 
 <style>
   form {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    flex-grow: 1;
   }
 
   .selectInput {
@@ -208,5 +241,31 @@
 
   .issue {
     color: #922;
+  }
+
+  .formContainer {
+    display: flex;
+    gap: 16px;
+  }
+
+  .tabs {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tab {
+    padding: 8px;
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+  }
+
+  .tab[data-active="false"]:hover {
+    background-color: #aaa;
+  }
+
+  .tab[data-active="true"] {
+    cursor: auto;
+    background-color: #ddd;
   }
 </style>
