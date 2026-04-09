@@ -274,8 +274,9 @@
   }
 
   .tab-contents[data-shown="false"] {
-    transform: translate(100vw);
+    transform: translate(50vw) scale(0%);
     position: absolute;
+    opacity: 0;
   }
 
   .tab-contents {
