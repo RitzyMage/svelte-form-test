@@ -32,7 +32,11 @@
       definitions: {
         X: {
           mask: "0",
-          displayChar: ".",
+          displayChar: "•",
+          placeholderChar: " ",
+        },
+        "0": {
+          mask: "0",
           placeholderChar: " ",
         },
       },
