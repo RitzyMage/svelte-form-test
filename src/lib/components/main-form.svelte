@@ -78,7 +78,7 @@
   </div>
 
   <form {...formInfo} oninput={() => formInfo.validate()}>
-    {#if tab === "User"}
+    <div class="tab-contents" data-shown={tab === "User"}>
       <label class="selectInput">
         <span class="label">Title</span>
         <select {...formInfo.fields.title.as("select")}>
@@ -109,9 +109,9 @@
           <span class="issue">{issue.message}</span>
         {/each}
       </label>
-    {/if}
+    </div>
 
-    {#if tab === "Games"}
+    <div class="tab-contents" data-shown={tab === "Games"}>
       <div class="multicheckboxInput">
         <div class="label">Games</div>
         <div class="checkboxes">
@@ -126,9 +126,9 @@
           {/each}
         </div>
       </div>
-    {/if}
+    </div>
 
-    {#if playsMagic && tab === "Magic"}
+    <div class="tab-contents" data-shown={tab === "Magic"}>
       <div class="multitextInput">
         <div class="label">Commanders</div>
         <div class="multitextItems">
@@ -176,7 +176,7 @@
           <span class="issue">{issue.message}</span>
         {/each}
       </label>
-    {/if}
+    </div>
 
     <button type="submit">SAVE</button>
   </form>
@@ -267,5 +267,9 @@
   .tab[data-active="true"] {
     cursor: auto;
     background-color: #ddd;
+  }
+
+  .tab-contents[data-shown="false"] {
+    display: none;
   }
 </style>
