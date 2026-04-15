@@ -266,7 +266,7 @@
 
   .tab[data-active="true"] {
     cursor: auto;
-    background-color: #ddd;
+    background-color: #eef;
   }
 
   .tab-contents {

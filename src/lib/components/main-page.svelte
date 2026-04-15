@@ -18,3 +18,9 @@
     <MainForm formInfo={props.formInfo} {user} />
   {/await}
 </div>
+
+<style>
+  h1 {
+    margin: 0 0 16px 0;
+  }
+</style>
