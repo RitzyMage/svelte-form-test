@@ -1,6 +1,7 @@
 <script lang="ts">
   import { GAMES, GUILDS, TITLES } from "$lib/data";
   import type { User } from "$lib/server/db/types";
+  import { onMount } from "svelte";
   import type { UserFormAction } from "../../routes/data.remote";
   import IMask from "imask";
 

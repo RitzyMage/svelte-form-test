@@ -1,8 +1,24 @@
 <script lang="ts">
   import favicon from "$lib/assets/favicon.svg";
   import BalatroBackground from "$lib/components/balatro-background/balatro-background.svelte";
+  import { onMount } from "svelte";
 
   let { children } = $props();
+
+  let intensity = $state(1);
+
+  let decreaseIntensity = () => {
+    intensity = Math.max(0, intensity - 0.05);
+  };
+
+  let increaseIntensity = () => {
+    intensity = Math.min(1, intensity + 0.2);
+  };
+
+  onMount(() => {
+    let interval = setInterval(decreaseIntensity, 100);
+    return () => clearInterval(interval);
+  });
 </script>
 
 <svelte:head>
@@ -10,8 +26,8 @@
 </svelte:head>
 
 <main>
-  <BalatroBackground />
-  <div id="content">
+  <BalatroBackground {intensity} />
+  <div id="content" onkeydown={increaseIntensity}>
     {@render children()}
   </div>
 </main>

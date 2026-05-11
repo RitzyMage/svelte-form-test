@@ -1,10 +1,16 @@
-<script>
+<script lang="ts">
   import { onMount } from "svelte";
+
   import { BalatroShader } from "./balatro-shader";
+
+  let { intensity }: { intensity: number } = $props();
+
+  let shader: BalatroShader;
+
   onMount(() => {
     // initShader();
     requestAnimationFrame(() => {
-      const fx = new BalatroShader({
+      shader = new BalatroShader({
         container: "#background", // the ID of the target element
         colours: { c1: "#30e040", c2: "#40ff60", c3: "#004010" },
         speed: 0.5,
@@ -14,6 +20,11 @@
         spinEase: 0.5,
       });
     });
+  });
+
+  $effect(() => {
+    // shader.
+    console.log(intensity);
   });
 </script>
 
